@@ -8,6 +8,11 @@ use Illuminate\support\Facades\Validator;
 
 class SiswaController extends Controller
 {
+    public function show()
+    {
+        $data_siswa = Siswa::join('kelas', 'kelas.id_kelas', 'siswa.id_kelas')->get();
+        return Response()->json($data_siswa);
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -40,8 +45,19 @@ class SiswaController extends Controller
         {
             return Response()->json(['status' => 0]);
         }
-
     }
-    
+    public function detail($id)
+    {
+        if(Siswa::where('id', $id)->exist()){
+            $data_siswa = Siswa::join('Kelas', 'kelas.id_kelas', 'siswa.id_kelas')
+                                      ->where('siswa.id', '=', $id)
+                                      ->get();
+
+            return Response()->json($data_siswa);
+        }
+        else{
+            return Response()->json(['message' => 'Tidak ditemukan' ]);
+        }
+    }
     //
 }
