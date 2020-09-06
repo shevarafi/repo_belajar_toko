@@ -23,3 +23,4 @@ Route::post('/kelas', 'KelasController@store');
 Route::get('/siswa', 'SiswaController@show');
 Route::get('/siswa/{id}', 'SiswaController@detail');
 Route::post('/siswa', 'SiswaController@store');
+Route::put('/siswa/{id}', 'SiswaController@update');
