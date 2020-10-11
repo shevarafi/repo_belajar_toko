@@ -36,6 +36,7 @@ public function login(Request $request)
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'type' => 'required|integer'
  ]);
 
  if($validator->fails()){
@@ -46,9 +47,11 @@ public function login(Request $request)
     'name' => $request->get('name'),
     'email' => $request->get('email'),
     'password' => Hash::make($request->get('password')),
+    'type' => $request->get('type'),
  ]);
 
     $token = JWTAuth::fromUser($user);
+    
     return response()->json(compact('user','token'),201);
  }
  public function getAuthenticatedUser()
